@@ -39,12 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'rest_framework.authtoken',
     'drf_yasg2',
     'corsheaders',
 
     'apps.users',
     'apps.file_manager',
+    'apps.folder_manager',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'file_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'file_system',
+        'NAME': 'file_manager',
         'USER': 'postgres',
     }
 }
@@ -133,7 +133,6 @@ DEFAULT_AUTHENTICATION_CLASSES = [
     'rest_framework_simplejwt.authentication.JWTAuthentication',
 ]
 if DEBUG:
-    DEFAULT_AUTHENTICATION_CLASSES.append('rest_framework.authentication.BasicAuthentication')
     DEFAULT_AUTHENTICATION_CLASSES.append('rest_framework.authentication.SessionAuthentication')
 
 
@@ -193,6 +192,9 @@ else:
         'http://127.0.0.1:8080',
         'http://localhost:8080',
     ]
+
+
+AUTH_USER_MODEL = 'users.User'
 
 
 try:
