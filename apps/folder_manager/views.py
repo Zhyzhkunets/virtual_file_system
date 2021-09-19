@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from apps.folder_manager.filters import FolderFilter
 from apps.folder_manager.models import Folder
+from apps.folder_manager.permissions import FolderPermission
 from apps.folder_manager.serializers import FolderSerializer
 
 
@@ -15,14 +16,15 @@ class FolderViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     """
     queryset = Folder.objects.all()
     serializer_class = FolderSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, FolderPermission]
     filterset_class = FolderFilter
 
     @swagger_auto_schema(
         responses={
             status.HTTP_200_OK: FolderSerializer,
-            status.HTTP_404_NOT_FOUND: 'Not found',
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
+            status.HTTP_403_FORBIDDEN: 'Forbidden',
+            status.HTTP_404_NOT_FOUND: 'Not found',
         },
         operation_description='Get folder by id',
     )
@@ -44,9 +46,10 @@ class FolderViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     @swagger_auto_schema(
         responses={
             status.HTTP_200_OK: FolderSerializer,
-            status.HTTP_404_NOT_FOUND: 'Not found',
             status.HTTP_400_BAD_REQUEST: 'Validation errors',
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
+            status.HTTP_403_FORBIDDEN: 'Forbidden',
+            status.HTTP_404_NOT_FOUND: 'Not found',
         },
         operation_description='Update a folder',
     )
@@ -56,9 +59,10 @@ class FolderViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     @swagger_auto_schema(
         responses={
             status.HTTP_200_OK: FolderSerializer,
-            status.HTTP_404_NOT_FOUND: 'Not found',
             status.HTTP_400_BAD_REQUEST: 'Validation errors',
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
+            status.HTTP_403_FORBIDDEN: 'Forbidden',
+            status.HTTP_404_NOT_FOUND: 'Not found',
         },
         operation_description='Partial update a folder',
     )
@@ -69,7 +73,6 @@ class FolderViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
         responses={
             status.HTTP_200_OK: FolderSerializer,
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
-            status.HTTP_403_FORBIDDEN: 'Forbidden',
         },
         operation_description="Get list of folders"
     )
