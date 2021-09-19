@@ -14,4 +14,4 @@ class FolderPermissionFilter(filters.FilterSet):
 
     class Meta:
         model = FolderPermission
-        fields = ['folder', 'user', 'permission']
+        fields = ['user', 'permission']

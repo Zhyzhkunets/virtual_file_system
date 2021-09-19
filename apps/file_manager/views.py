@@ -100,10 +100,13 @@ class FilePermissionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     """
     File permissions viewset.
     """
-    queryset = FilePermission.objects.all()
+    queryset = FilePermission.objects.none()
     serializer_class = FilePermissionSerializer
     permission_classes = [IsAuthenticated]
     filterset_class = FilePermissionFilter
+
+    def get_queryset(self):
+        return FilePermission.objects.filter(file__owner_id=self.request.user.id)
 
     @swagger_auto_schema(
         responses={

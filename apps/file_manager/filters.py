@@ -14,4 +14,4 @@ class FilePermissionFilter(filters.FilterSet):
 
     class Meta:
         model = FilePermission
-        fields = ['name', 'file', 'user', 'permission']
+        fields = ['user', 'permission']

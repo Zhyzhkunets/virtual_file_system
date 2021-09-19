@@ -97,10 +97,13 @@ class FolderPermissionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     """
     Folder permissions viewset.
     """
-    queryset = FolderPermission.objects.all()
+    queryset = FolderPermission.objects.none()
     serializer_class = FolderPermissionSerializer
     permission_classes = [IsAuthenticated]
     filterset_class = FolderPermissionFilter
+
+    def get_queryset(self):
+        return FolderPermission.objects.filter(folder__owner_id=self.request.user.id)
 
     @swagger_auto_schema(
         responses={
