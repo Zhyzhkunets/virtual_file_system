@@ -1,13 +1,12 @@
-from django.contrib.auth.models import Permission
 from drf_yasg2.utils import swagger_auto_schema
 from rest_framework import mixins, viewsets, status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 
-from apps.file_manager.filters import FileFilter, FilePermissionFilter, PermissionFilter
+from apps.file_manager.filters import FileFilter, FilePermissionFilter
 from apps.file_manager.models import File, FilePermission
 from apps.file_manager.permissions import FileAccessPermission
-from apps.file_manager.serializers import FileSerializer, FilePermissionSerializer, PermissionSerializer
+from apps.file_manager.serializers import FileSerializer, FilePermissionSerializer
 
 
 class FileViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
@@ -177,34 +176,3 @@ class FilePermissionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     )
     def destroy(self, request, *args, **kwargs):
         return super().destroy(request, *args, **kwargs)
-
-
-class PermissionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
-    """
-    Permissions viewset.
-    """
-    queryset = Permission.objects.all()
-    serializer_class = PermissionSerializer
-    permission_classes = [IsAuthenticated]
-    filterset_class = PermissionFilter
-
-    @swagger_auto_schema(
-        responses={
-            status.HTTP_200_OK: PermissionSerializer,
-            status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
-            status.HTTP_404_NOT_FOUND: 'Not found',
-        },
-        operation_description='Get permission by id',
-    )
-    def retrieve(self, request, *args, **kwargs):
-        return super().retrieve(request, *args, **kwargs)
-
-    @swagger_auto_schema(
-        responses={
-            status.HTTP_200_OK: FilePermissionSerializer,
-            status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
-        },
-        operation_description="Get list of permissions"
-    )
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
