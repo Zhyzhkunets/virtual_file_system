@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from apps.folder_manager.filters import FolderFilter, FolderPermissionFilter
 from apps.folder_manager.models import Folder, FolderPermission
-from apps.folder_manager.permissions import FolderAccessPermission
+from apps.folder_manager.permissions import FolderAccessPermission, FolderPermAccessPermission
 from apps.folder_manager.serializers import FolderSerializer, FolderPermissionSerializer
 
 
@@ -99,7 +99,7 @@ class FolderPermissionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     """
     queryset = FolderPermission.objects.none()
     serializer_class = FolderPermissionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, FolderPermAccessPermission]
     filterset_class = FolderPermissionFilter
 
     def get_queryset(self):
@@ -109,7 +109,6 @@ class FolderPermissionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
         responses={
             status.HTTP_200_OK: FolderPermissionSerializer,
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
-            status.HTTP_403_FORBIDDEN: 'Forbidden',
             status.HTTP_404_NOT_FOUND: 'Not found',
         },
         operation_description='Get folder permission by id',
@@ -134,7 +133,6 @@ class FolderPermissionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
             status.HTTP_200_OK: FolderPermissionSerializer,
             status.HTTP_400_BAD_REQUEST: 'Validation errors',
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
-            status.HTTP_403_FORBIDDEN: 'Forbidden',
             status.HTTP_404_NOT_FOUND: 'Not found',
 
         },
@@ -148,7 +146,6 @@ class FolderPermissionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
             status.HTTP_200_OK: FolderPermissionSerializer,
             status.HTTP_400_BAD_REQUEST: 'Validation errors',
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
-            status.HTTP_403_FORBIDDEN: 'Forbidden',
             status.HTTP_404_NOT_FOUND: 'Not found',
         },
         operation_description='Partial update a folder permission',

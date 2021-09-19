@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from apps.file_manager.filters import FileFilter, FilePermissionFilter
 from apps.file_manager.models import File, FilePermission
-from apps.file_manager.permissions import FileAccessPermission
+from apps.file_manager.permissions import FileAccessPermission, FilePermAccessPermission
 from apps.file_manager.serializers import FileSerializer, FilePermissionSerializer
 
 
@@ -102,7 +102,7 @@ class FilePermissionViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     """
     queryset = FilePermission.objects.none()
     serializer_class = FilePermissionSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, FilePermAccessPermission]
     filterset_class = FilePermissionFilter
 
     def get_queryset(self):

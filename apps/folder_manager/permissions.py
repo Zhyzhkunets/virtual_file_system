@@ -6,7 +6,7 @@ from apps.folder_manager.models import Folder
 
 class FolderAccessPermission(PermissionsMixin, BasePermission):
     """
-    Check folder permissions
+    Folder permissions
     """
 
     def has_object_permission(self, request, view, obj):
@@ -31,4 +31,21 @@ class FolderAccessPermission(PermissionsMixin, BasePermission):
                 return True
 
             return False
+        return super().has_permission(request, view)
+
+
+class FolderPermAccessPermission(PermissionsMixin, BasePermission):
+    """
+    FolderPermission permissions
+    """
+
+    def has_permission(self, request, view):
+        if view.action == 'create':
+            if not request.data.get('folder'):
+                return True
+
+            folder = Folder.objects.filter(id=request.data.get('folder')).first()
+            if folder and folder.owner_id != request.user.id:
+                return False
+
         return super().has_permission(request, view)
