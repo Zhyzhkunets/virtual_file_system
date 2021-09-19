@@ -41,8 +41,6 @@ class FilePermission(models.Model):
     File permission model
     """
 
-    name = models.CharField(max_length=255)
-
     file = models.ForeignKey(File, on_delete=models.CASCADE, related_name='permissions', null=True, blank=True)
     user = models.ForeignKey('users.User', related_name='file_permissions', on_delete=models.SET_NULL,
                              blank=True, null=True)
@@ -53,4 +51,4 @@ class FilePermission(models.Model):
         verbose_name_plural = 'Files Permission'
 
     def __str__(self):
-        return self.name
+        return f'{self.permission} | {self.user}'
