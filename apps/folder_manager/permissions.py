@@ -30,4 +30,5 @@ class FolderAccessPermission(PermissionsMixin, BasePermission):
             if is_owner or public_permissions.exists() or personal_permissions.exists():
                 return True
 
-        return False
+            return False
+        return super().has_permission(request, view)
