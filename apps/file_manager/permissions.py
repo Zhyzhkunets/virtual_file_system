@@ -5,7 +5,7 @@ from apps.file_manager.models import File
 from apps.folder_manager.models import Folder
 
 
-class FilePermission(PermissionsMixin, BasePermission):
+class FileAccessPermission(PermissionsMixin, BasePermission):
     """
     Check file permissions.
     """
