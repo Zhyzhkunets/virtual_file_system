@@ -19,5 +19,5 @@ class FolderAdmin(admin.ModelAdmin):
 
 @admin.register(FolderPermission)
 class FolderPermissionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'folder', 'user', 'permission', 'id')
-    search_fields = ('name', 'user__email', 'user__username')
+    list_display = ('id', 'folder', 'user', 'permission')
+    search_fields = ('user__email', 'user__username', 'permission__codename')

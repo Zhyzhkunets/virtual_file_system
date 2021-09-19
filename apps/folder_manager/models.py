@@ -29,8 +29,6 @@ class FolderPermission(models.Model):
     Folder permission model
     """
 
-    name = models.CharField(max_length=255)
-
     folder = models.ForeignKey(Folder, on_delete=models.CASCADE, related_name='permissions',
                                null=True, blank=True)
     user = models.ForeignKey('users.User', related_name='folder_permissions', on_delete=models.SET_NULL,
@@ -42,4 +40,4 @@ class FolderPermission(models.Model):
         verbose_name_plural = 'Folders Permission'
 
     def __str__(self):
-        return self.name
+        return f'{self.permission} | {self.user}'
