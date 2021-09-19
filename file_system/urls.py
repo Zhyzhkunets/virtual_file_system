@@ -24,7 +24,7 @@ from drf_yasg2.views import get_schema_view
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from apps.file_manager.views import FileViewSet, FilePermissionViewSet
-from apps.folder_manager.views import FolderViewSet
+from apps.folder_manager.views import FolderViewSet, FolderPermissionViewSet
 from apps.users.views import UserViewSet, PermissionViewSet
 
 schema_view = get_schema_view(
@@ -41,6 +41,7 @@ router = routers.SimpleRouter()
 router.register(r'users', UserViewSet)
 router.register(r'permission', PermissionViewSet)
 router.register(r'folders', FolderViewSet)
+router.register(r'folders-permission', FolderPermissionViewSet)
 router.register(r'files', FileViewSet)
 router.register(r'files-permission', FilePermissionViewSet)
 

@@ -4,7 +4,7 @@ from apps.file_manager.mixins import PermissionsMixin
 from apps.folder_manager.models import Folder
 
 
-class FolderPermission(PermissionsMixin, BasePermission):
+class FolderAccessPermission(PermissionsMixin, BasePermission):
     """
     Check folder permissions
     """
