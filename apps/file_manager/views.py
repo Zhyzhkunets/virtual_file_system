@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from apps.file_manager.filters import FileFilter
 from apps.file_manager.models import File
+from apps.file_manager.permissions import FilePermission
 from apps.file_manager.serializers import FileSerializer
 
 
@@ -16,15 +17,16 @@ class FileViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     """
     queryset = File.objects.all()
     serializer_class = FileSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, FilePermission]
     filterset_class = FileFilter
     parser_classes = (MultiPartParser,)
 
     @swagger_auto_schema(
         responses={
             status.HTTP_200_OK: FileSerializer,
-            status.HTTP_404_NOT_FOUND: 'Not found',
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
+            status.HTTP_403_FORBIDDEN: 'Forbidden',
+            status.HTTP_404_NOT_FOUND: 'Not found',
         },
         operation_description='Get file by id',
     )
@@ -46,9 +48,11 @@ class FileViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     @swagger_auto_schema(
         responses={
             status.HTTP_200_OK: FileSerializer,
-            status.HTTP_404_NOT_FOUND: 'Not found',
             status.HTTP_400_BAD_REQUEST: 'Validation errors',
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
+            status.HTTP_403_FORBIDDEN: 'Forbidden',
+            status.HTTP_404_NOT_FOUND: 'Not found',
+
         },
         operation_description='Update a file',
     )
@@ -58,9 +62,10 @@ class FileViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
     @swagger_auto_schema(
         responses={
             status.HTTP_200_OK: FileSerializer,
-            status.HTTP_404_NOT_FOUND: 'Not found',
             status.HTTP_400_BAD_REQUEST: 'Validation errors',
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
+            status.HTTP_403_FORBIDDEN: 'Forbidden',
+            status.HTTP_404_NOT_FOUND: 'Not found',
         },
         operation_description='Partial update a file',
     )
@@ -71,7 +76,6 @@ class FileViewSet(mixins.RetrieveModelMixin, mixins.ListModelMixin,
         responses={
             status.HTTP_200_OK: FileSerializer,
             status.HTTP_401_UNAUTHORIZED: 'Unauthorized',
-            status.HTTP_403_FORBIDDEN: 'Forbidden',
         },
         operation_description="Get list of files"
     )
