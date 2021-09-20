@@ -84,8 +84,11 @@ WSGI_APPLICATION = 'file_system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'file_manager',
-        'USER': 'postgres',
+        'NAME': 'virtual_file_system',
+        'USER': 'virtual_file_system',
+        'PASSWORD': 'virtual_file_system',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
@@ -195,9 +198,3 @@ else:
 
 
 AUTH_USER_MODEL = 'users.User'
-
-
-try:
-    from .local_settings import *
-except Exception as e:
-    print(f'{e} - There is no local settings file')
