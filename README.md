@@ -4,7 +4,7 @@
 
 - Clone the project
 ```bash
-git clone 
+git clone git@github.com:Zhyzhkunets/Virtual-File-System.git
 ```
 
 #### To use virtualenv
