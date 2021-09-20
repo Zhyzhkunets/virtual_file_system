@@ -26,7 +26,7 @@ docker-compose run web python manage.py createsuperuser
 
 - Run test
 ```bash
-docker-compose run web python manage.py createsuperuser
+docker-compose run web python manage.py test
 ```
 
 #### To use virtualenv
