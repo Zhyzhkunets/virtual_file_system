@@ -198,3 +198,9 @@ else:
 
 
 AUTH_USER_MODEL = 'users.User'
+
+
+try:
+    from .local_settings import *
+except Exception as e:
+    print(f'{e} - There is no local settings file')
